@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CommonConfig(AppConfig):
+class AccountsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'shelter_v11.common'
+    name = 'shelter_v11.accounts'

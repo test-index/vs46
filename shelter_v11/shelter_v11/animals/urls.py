@@ -8,5 +8,5 @@ urlpatterns = [
         path('', details_animal, name='animal details'),
         path('edit/', edit_animal, name='edit details'),
         path('delete/', delete_animal, name='delete details'),
-    ]))
+    ])),
 ]

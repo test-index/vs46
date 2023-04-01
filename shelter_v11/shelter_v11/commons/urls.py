@@ -1,7 +1,7 @@
 from django.urls import path
 
-from shelter_v11.common.views import index
+from shelter_v11.commons.views import index
 
-urlpatterns = [
+urlpatterns = (
     path('', index, name='index'),
-]
+)

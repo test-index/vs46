@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'shelter_v11.shelter_v11',
     'shelter_v11.animals',
     'shelter_v11.animal_photos',
-    'shelter_v11.common'
+    'shelter_v11.commons',
+    'shelter_v11.accounts',
 ]
 
 MIDDLEWARE = [
@@ -81,11 +81,36 @@ WSGI_APPLICATION = 'shelter_v11.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'pg-user',
+        'PASSWORD': 'Passw0rd465',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    },
 }
 
+LOGGING = {
+    'version': 1,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
