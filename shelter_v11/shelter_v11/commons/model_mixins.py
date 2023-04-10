@@ -1,4 +1,5 @@
 class StrFromFieldsMixin:
+
     str_fields = ()
 
     def __str__(self):
