@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 
@@ -5,6 +6,7 @@ from shelter_v11.animal_photos.validators import validate_file_less_than_5mb
 from shelter_v11.animals.models import Animals
 from shelter_v11.commons.model_mixins import StrFromFieldsMixin
 
+UserModel = get_user_model()
 
 class AnimalPhotos(StrFromFieldsMixin, models.Model):
     str_fields = ('pk', 'photo', 'location',)
@@ -43,4 +45,9 @@ class AnimalPhotos(StrFromFieldsMixin, models.Model):
     tagged_animals = models.ManyToManyField(
         Animals,
         blank=True,
+    )
+
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.RESTRICT,
     )

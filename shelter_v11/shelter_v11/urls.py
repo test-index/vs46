@@ -23,7 +23,7 @@ urlpatterns = [
     path('', include('shelter_v11.commons.urls')),
     path('animals/', include('shelter_v11.animals.urls')),
     path('photos/', include('shelter_v11.animal_photos.urls')),
-    path('profile/', include('shelter_v11.accounts.urls')),
+    path('accounts/', include('shelter_v11.accounts.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
