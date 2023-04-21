@@ -4,7 +4,7 @@ from shelter_v11.animals.views import add_animal, details_animal, edit_animal, d
 
 urlpatterns = [
     path('add/', add_animal, name='add animal'),
-    path('<str:username>/animal/<slug:animal_name>/', include([
+    path('<str:username>/animal/<slug:animal_slug>/', include([
         path('', details_animal, name='animal details'),
         path('edit/', edit_animal, name='edit animal'),
         path('delete/', delete_animal, name='delete animal'),

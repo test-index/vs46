@@ -1,22 +1,26 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from shelter_v11.animals.forms import AnimalCreateForm, AnimalEditForm, AnimalDeleteForm
 from shelter_v11.animals.models import Animals
 from shelter_v11.animals.utils import get_animal_by_name_and_username
-from shelter_v11.commons.utils import apply_likes_count, apply_user_liked_photo
+from shelter_v11.commons.utils import apply_likes_count, apply_user_liked_photo, is_owner
 
 
+@login_required
 def add_animal(request):
     if request.method == 'GET':
         form = AnimalCreateForm()
     else:
         form = AnimalCreateForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('details user', pk=1)
+            animal = form.save(commit=False)
+            animal.user = request.user
+            animal.save()
+            return redirect('details user', pk=request.user.pk)
 
     context = {
-        'form': AnimalCreateForm(),
+        'form': form,
     }
     return render(request, 'animals/animal-add-page.html', context)
 
@@ -32,7 +36,7 @@ def delete_animal(request, username, animal_slug):
         form = AnimalDeleteForm(request.POST, instance=animal)
         if form.is_valid():
             form.save()
-            return redirect('details user', pk=1)
+            return redirect('details user', request.user.pk)
 
     context = {
         'form': form,
@@ -42,15 +46,17 @@ def delete_animal(request, username, animal_slug):
     return render(request, 'animals/animal-delete-page.html', context)
 
 
-def details_animal(request, username, ainmal_slug):
-    animal = get_animal_by_name_and_username(ainmal_slug, username)
-    photos = [apply_likes_count(photo) for photo in animal.photo_set.all()]
+def details_animal(request, username, animal_slug):
+    animal = get_animal_by_name_and_username(animal_slug, username)
+    photos = [apply_likes_count(photo) for photo in animal.animalphotos_set.all()]
     photos = [apply_user_liked_photo(photo) for photo in photos]
+
 
     context = {
         'animal': animal,
-        'photos_count': animal.photo_set.count(),
+        'photos_count': animal.animalphotos_set.count(),
         'animal_photos': photos,
+        'is_owner': animal.user == request.user,
     }
 
     return render(
@@ -62,8 +68,11 @@ def details_animal(request, username, ainmal_slug):
 
 def edit_animal(request, username, animal_slug):
     animal = Animals.objects \
-        .filter(slug=animal_slug) \
+        .filter(slug=animal_slug, user__username=username) \
         .get()
+
+    if not is_owner(request, animal):
+        return redirect('animal details', username=username, animal_slug=animal_slug)
 
     if request.method == 'GET':
         form = AnimalEditForm(instance=animal)
@@ -71,7 +80,7 @@ def edit_animal(request, username, animal_slug):
         form = AnimalEditForm(request.POST, instance=animal)
         if form.is_valid():
             form.save()
-            return redirect('details pet', username=username, animal_slug=animal_slug)
+            return redirect('animal details', username=username, animal_slug=animal_slug)
 
     context = {
         'form': form,

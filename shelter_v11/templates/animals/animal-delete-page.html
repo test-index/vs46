@@ -2,7 +2,7 @@
 {% block page_content %}
     <div class="edit-delete edit-photo">
         <h2>Delete pet</h2>
-         <form method="post" action="{% url 'delete pet' username=username animal_slug=animal_slug %}">
+         <form method="post" action="{% url 'delete animal' username=username animal_slug=animal_slug %}">
             {{ form.as_p }}
             <button class="delete-btn" type="submit">Delete</button>
             <a class="btn btn-primary" href="javascript:history.back()">

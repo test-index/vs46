@@ -12,7 +12,6 @@
                 <i>Petstagram</i>
             </a>
         </div>
-
         <div class="nav-links">
             <ul class="nav-group">
                 <li class="nav-item">
@@ -25,17 +24,29 @@
                         <i>Add Photo</i>
                     </a>
                 </li>
-                <li class="nav-item">
-                    {%if request.user.is_authenticated %}
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
                         <a href="{% url 'details user' pk=request.user.pk %}">
                             <i>Profile</i>
                         </a>
-                    {% else %}
-                        <a href="{% url 'register user' %}">
-                             <i>Profile</i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'logout user' %}">
+                            <i>Sign out</i>
                         </a>
-                    {% endif %}
-                </li>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                    <a href="{% url 'register user' %}">
+                            <i>Sign up</i>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'login user' %}">
+                            <i>Sign in</i>
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

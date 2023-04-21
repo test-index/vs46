@@ -14,6 +14,7 @@ class SignInView(LoginView):
 
 
 class SignUpView(CreateView):
+    # TODO CHECK IF YOU REMOVE USERNAME, MAIL ETC FROM THE TEMplate If THEY Will show
     zz =1
     template_name = 'accounts/register-page.html'
     form_class = UserCreateForm
@@ -35,6 +36,10 @@ class UserEditView(UpdateView):
     model = UserModel
     fields = ('first_name', 'last_name', 'gender',)
 
+    def get_success_url(self):
+        user_id = self.request.user.id
+        return reverse_lazy('details user', kwargs={'pk':user_id})
+
 
 class UserDetailsView(DetailView):
     template_name = 'accounts/profile-details-page.html'
@@ -44,7 +49,7 @@ class UserDetailsView(DetailView):
         context = super().get_context_data(**kwargs)
 
         context['is_owner'] = self.request.user == self.object
-        context['pets_count'] = self.object.animals_set.count()
+        context['animals_count'] = self.object.animals_set.count()
 
         photos = self.object.animalphotos_set \
             .prefetch_related('photolike_set')

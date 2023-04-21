@@ -8,6 +8,7 @@ from shelter_v11.commons.model_mixins import StrFromFieldsMixin
 
 UserModel = get_user_model()
 
+
 class AnimalPhotos(StrFromFieldsMixin, models.Model):
     str_fields = ('pk', 'photo', 'location',)
     MIN_DESCRIPTION_LENGTH = 10

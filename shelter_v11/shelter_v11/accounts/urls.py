@@ -6,7 +6,7 @@ from shelter_v11.accounts.views import SignInView, \
 urlpatterns = [
     path('login/', SignInView.as_view(), name='login user'),
     path('register/', SignUpView.as_view(), name='register user'),
-    path('register/', SignOutView.as_view(), name='logout user'),
+    path('logou/', SignOutView.as_view(), name='logout user'),
     path('profile/<int:pk>/', include([
         path('', UserDetailsView.as_view(), name='details user'),
         path('edit/', UserEditView.as_view(), name='edit user'),

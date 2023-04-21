@@ -6,6 +6,7 @@ from shelter_v11.commons.model_mixins import StrFromFieldsMixin
 
 UserModel = get_user_model()
 
+
 class Animals(StrFromFieldsMixin, models.Model):
     str_fields = ('id', 'name')
     MAX_NAME = 30
