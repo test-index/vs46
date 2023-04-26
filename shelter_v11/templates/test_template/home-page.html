@@ -2,20 +2,23 @@
 {% load static %}
 
 {% block page_content %}
-    <div class="container">
-        <div class="col-9">
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="col-9">
 
-            <form class="searchbar" method="get" action="{% url 'index' %}">
-                {{ search_form }}
-                <button>
-                    <img src="{% static 'images/search.png' %}" height="18" alt="img2">
-                </button>
-                {% csrf_token %}
-            </form>
+                <form class="searchbar" method="get" action="{% url 'index' %}">
+                    {{ search_form }}
+                    <button>
+                        <img src="{% static 'images/search.png' %}" height="18" alt="img2">
+                    </button>
+                    {% csrf_token %}
+                </form>
 
-            {% for photo in photos %}
-                {% include 'animal_photos/photo-item.html' with photo=photo %}
-            {% endfor %}
+                {% for photo in photos %}
+                    {% include 'animal_photos/photo-item.html' with photo=photo %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
+
+    {% endif %}
 {% endblock %}

@@ -120,17 +120,15 @@
                                 </div>
                             </div>
                             <p>
-                                {# TODO: fix with auth #}
-                                <a href="">Steven Ivanov</a>
+                                <a href="">{{ request.user.username }}</a>
                                 {{ comment.text }}
 
                             </p>
                         </div>
-                        <span>{{ comment.publication_date }}</span>
+                        <span>{{ comment.publication_date_and_time }}</span>
                     </div>
                 </div>
             </div>
-            <!-- End Comments Section -->
         {% endfor %}
 
 

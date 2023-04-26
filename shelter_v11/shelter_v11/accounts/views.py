@@ -56,6 +56,7 @@ class UserDetailsView(DetailView):
 
         context['photos_count'] = photos.count()
         context['likes_count'] = sum(x.photolike_set.count() for x in photos)
+        context['user_pk'] = self.request.user.pk
 
         return context
 

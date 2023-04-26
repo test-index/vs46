@@ -8,7 +8,7 @@
                 <div class="profile_img">
                     <div class="image">
                         <img src="{{ animal.personal_photo }}"
-                             alt="img8">
+                             alt="image of {{ animal.name }}">
                     </div>
                 </div>
                 <div class="personal">
@@ -18,7 +18,7 @@
                             <a href="{% url 'edit animal' username=request.user.username  animal_slug=animal.slug %}">
                                 <img class="edit-img" src="{% static 'images/edit-pen-icon-6.jpg' %}" alt="edit button">
                             </a>
-                            <a href="{% url 'delete animal' username='usernam1' animal_slug=animal.slug %}">
+                            <a href="{% url 'delete animal' username=request.user.username animal_slug=animal.slug %}">
                                 <img class="bin-img" src="{% static 'images/icon-remove-22.jpg' %}" alt="bin button">
                             </a>
                         {% endif %}

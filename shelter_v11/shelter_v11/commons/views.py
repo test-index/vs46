@@ -65,9 +65,12 @@ def comment_photo(request, photo_id):
     form = PhotoCommentForm(request.POST)
     zz = form
     # dd = form.cleaned_data
+    user_id = request.user.pk
+
     gg = form.errors
     if form.is_valid(): # it is not valid !!!! #Todo check why not saving comments
         comment = form.save(commit=False)
         comment.photo = photo
+        comment.user_id = user_id
         comment.save()
     return redirect('index')

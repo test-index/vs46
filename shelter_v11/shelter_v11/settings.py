@@ -9,28 +9,23 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os
-from pathlib import Path
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-from django.urls import reverse_lazy
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-i!asi^f7&_25s9#gqg1u$uj=*@f%wx2u90@m)09f12v51y+3hi'
+import os
+from pathlib import Path
+from django.urls import reverse_lazy
+from dotenv import load_dotenv
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = []
+load_dotenv(dotenv_path=BASE_DIR / 'envs/.env')
 
+SECRET_KEY=os.getenv("SECREY_KEY")
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
 
-# Application definition
+DEBUG = bool(os.environ.get('DEBUG'))
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -83,13 +78,13 @@ WSGI_APPLICATION = 'shelter_v11.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'pg-user',
-        'PASSWORD': 'Passw0rd465',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    },
+        'ENGINE': os.environ.get('DB_ENGINE'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
+            },
 }
 
 LOGGING = {

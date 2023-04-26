@@ -23,7 +23,9 @@ def add_photo(request):
 def details_photo(request, pk):
     photo = AnimalPhotos.objects.filter(pk=pk) \
         .get()
+    user_pk = request.user.pk
     context = {
+        'user_pk': user_pk,
         'photo': photo,
         'has_user_liked_photo': get_user_liked_photos(pk),
         'likes_count': photo.photolike_set.count(), # manager, reverse rel, get all the likes for the photo
