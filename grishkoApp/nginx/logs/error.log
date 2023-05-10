@@ -160,3 +160,8 @@
 2023/05/10 12:02:04 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
 2023/05/10 12:02:04 [notice] 1#1: OS: Linux 4.19.128-microsoft-standard
 2023/05/10 12:02:04 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/05/10 12:02:04 [notice] 1#1: start worker processes
+2023/05/10 12:02:04 [notice] 1#1: start worker process 20
+2023/05/10 12:02:04 [notice] 1#1: start worker process 21
+2023/05/10 12:02:04 [notice] 1#1: start worker process 22
+2023/05/10 12:02:04 [notice] 1#1: start worker process 23
