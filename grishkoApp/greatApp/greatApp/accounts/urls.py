@@ -1,5 +1,5 @@
 from django.urls import include, path
-
+from .signals import *
 from greatApp.accounts.views import SignInView, SignUpView, SignOutView, \
 UserDetailsView, UserEditView, UserDeleteView
 
@@ -13,3 +13,4 @@ urlpatterns = [
         path('delete/', UserDeleteView.as_view(), name='deletes user'),
     ])),
 ]
+

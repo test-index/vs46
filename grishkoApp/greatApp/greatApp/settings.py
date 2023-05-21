@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+import cloudinary
 from django.urls import reverse_lazy
 from dotenv import load_dotenv
 
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    "cloudinary",
     "greatApp.animals",
     "greatApp.accounts",
     "greatApp.animal_photos",
@@ -120,6 +122,18 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'accounts.ShelterUser'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 
+if DEBUG:
+    EMAIL_HOST = os.environ.get('EMAIL_HOST')
+    EMAIL_PORT = os.environ.get('EMAIL_PORT')
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+else:
+    EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
+    MAILJET_API_KEY = os.environ.get('EMAIL_HOST_USER')
+    MAILJET_API_SECRET = os.environ.get('EMAIL_HOST_PASSWORD')
+
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_MAIL')
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -146,7 +160,14 @@ STATIC_ROOT = '/tmp/greatApp/staticfiles'
 
 MEDIA_URL = 'media/'
 
-MEDIA_ROOT = BASE_DIR / 'mediafiles'
+# MEDIA_ROOT = BASE_DIR / 'mediafiles'
+
+cloudinary.config(
+    cloud_name="dryiqy7uv",
+    api_key="612668113225383",
+    api_secret="IQt31wr2_PW3pvLTi94BxG_n2JQ",
+    secure=True
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

@@ -10,7 +10,7 @@ services:
     ports:
       - 8000:8000
     env_file:
-      - ./greatApp/envs/.env
+      - ./greatApp/envs/.env.prodca
     depends_on:
       - postgres
   postgres:
@@ -20,7 +20,7 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: Passw0rd465
-      POSTGRES_USER: greatappusr5
+      POSTGRES_USER: greatappuser5
       POSTGRES_DB: postgres
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:

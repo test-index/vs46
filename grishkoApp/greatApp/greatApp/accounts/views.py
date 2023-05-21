@@ -1,15 +1,12 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, UpdateView, DetailView
 
 from greatApp.accounts.forms import UserCreateForm
 
 UserModel = get_user_model()
-
-
-
 
 
 class SignInView(LoginView):
@@ -21,6 +18,11 @@ class SignUpView(CreateView):
     template_name = 'accounts/register-page.html'
     form_class = UserCreateForm
     success_url = reverse_lazy('index')
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        login(request, self.object)
+        return response
 
 
 class SignOutView(LogoutView):
@@ -60,4 +62,21 @@ class UserDetailsView(DetailView):
         context['likes_count'] = sum(x.photolike_set.count() for x in photos)
         context['user_pk'] = self.request.user.pk
 
+        context['photos'] = self.get_paginated_photos()
+        context['animals'] = self.object.pet_set.all()
+
         return context
+
+    photos_paginate_by = 2
+
+    def get_photos_page(self):
+        return self.request.GET.get('page', 1)
+
+    def get_paginated_photos(self):
+        page = self.get_photos_page()
+
+        photos = self.object.photo_set \
+            .order_by('-publication_date')
+
+        paginator = Paginator(photos, self.photos_paginate_by)
+        return paginator.get_page(page)
